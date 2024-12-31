@@ -1,19 +1,25 @@
 package com.example.demo.zoho.service;
 
 import com.example.demo.zoho.dao.ZohoEmployeeDao;
+import com.example.demo.zoho.dao.ZohoLeaveDao;
 import com.example.demo.zoho.entity.Employee;
 import com.example.demo.zoho.entity.Leave;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ZohoLeaveService {
 
 
     private final ZohoEmployeeDao zohoEmployeeDao;
+    private final ZohoLeaveDao zohoLeaveDao;
 
-    public ZohoLeaveService(ZohoEmployeeDao zohoEmployeeDao) {
+
+    public ZohoLeaveService(ZohoEmployeeDao zohoEmployeeDao, ZohoLeaveDao zohoLeaveDao) {
         this.zohoEmployeeDao = zohoEmployeeDao;
+        this.zohoLeaveDao = zohoLeaveDao;
     }
 
     @Transactional(transactionManager = "zohoTransactionManager")
@@ -33,6 +39,11 @@ public class ZohoLeaveService {
 
         // Save the employee to persist the leave
         zohoEmployeeDao.save(employee);
+    }
+
+    @Transactional(transactionManager = "zohoTransactionManager")
+    public List<Leave> getAllLeaves() {
+        return zohoLeaveDao.findAll();
     }
 
 }

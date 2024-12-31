@@ -1,6 +1,7 @@
 package com.example.demo.zoho.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,8 +16,9 @@ public class Leave {
     @Column(name="leave_days")
     private int numberOfDays;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private Employee employee;
 
     public Leave() {
